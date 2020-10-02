@@ -575,7 +575,8 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: ZEN_SIGNALS_ADD_UNIRX
   platformArchitecture: {}
   scriptingBackend:
     Standalone: 1
