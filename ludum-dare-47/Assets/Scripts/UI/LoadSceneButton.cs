@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -9,10 +10,18 @@ public class LoadSceneButton : MonoBehaviour
     private string sceneName;
 
     [Inject]
-    private ZenjectSceneLoader loader;
+    private ZenjectSceneLoader _loader;
+
+    [Inject]
+    private SignalBus _signalBus;
 
     public void LoadScene()
     {
-        loader.LoadSceneAsync(sceneName, loadMode: UnityEngine.SceneManagement.LoadSceneMode.Single);
+        _signalBus.Fire(new StartSceneTransitionEffectSignal(OnScreenIsBlack));
+    }
+
+    private void OnScreenIsBlack()
+    {
+        _loader.LoadSceneAsync(sceneName, loadMode: UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 }
