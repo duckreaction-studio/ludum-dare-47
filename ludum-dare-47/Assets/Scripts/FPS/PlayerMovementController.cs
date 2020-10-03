@@ -5,88 +5,60 @@ using UnityEngine.UIElements;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    // Start is called before the first frame update
-   [Header("Movement Settings")]
-    public float walkSpeed;
-    public float sprintSpeed;
-    public float jumpForce;
-    public SprintType sprintType;
-    public float gravityScale = 1;
-    public bool isInAir = false;
-    //other Variables
-    CharacterController charControl;
-    [Tooltip("The transform which the movement is relative to, for typical fps movement select main camera. But it can be anything")]
-    public Transform mainCamera;
-    Vector2 pInput;
+    [Header("Movement Settings")]
+    [SerializeField]
+    private float walkSpeed;
+    [SerializeField]
+    private float jumpForce;
+    [SerializeField]
+    private float gravityScale = 1;
+    [SerializeField]
+    private Transform mainCamera;
+
+    public bool isInAir { get; private set; } = false;
 
     public PlayerInputController playerInputController;
-    float movementSpeed;
+
+    private CharacterController characterController;
     float gravity;
-    bool isSprinting = false;
-    
-    
+   
    
     void Start()
     {
-        charControl = GetComponent<CharacterController>();
-        
-        //playerInputController = FindObjectOfType<PlayerInputController>();
+        characterController = GetComponent<CharacterController>();
     }
 
-
-
-
-    // Update is called once per frame
     private void Update()
     {
+        UpdateJump();
 
-        #region Jump
+        transform.rotation = Quaternion.Euler(new Vector3(0, mainCamera.eulerAngles.y, 0));
+
+        Vector2 pInput = playerInputController.inputActions.Player.Move.ReadValue<Vector2>();
+
+        /*charControl.Move(transform.right * pInput.x * walkSpeed * Time.deltaTime + transform.forward * pInput.y * walkSpeed * Time.deltaTime + gravity * transform.up * Time.deltaTime);*/
+
+        Vector3 dir = (transform.right * pInput.x + transform.forward * pInput.y) * walkSpeed;
+        dir += transform.up * gravity;
+        characterController.Move( dir * Time.deltaTime);
+    }
+
+    private void UpdateJump()
+    {
         if (isInAir == false)
         {
             if (playerInputController.inputActions.Player.Jump.triggered)
-            { 
-            gravity = jumpForce * Time.deltaTime;
-            isInAir = true;
+            {
+                gravity = jumpForce;
+                isInAir = true;
             }
         }
-        #endregion
-        
-        #region sprinting
-        if (isSprinting)
-        {
-            movementSpeed = sprintSpeed;
-        }
-        else
-        {
-            movementSpeed = walkSpeed;
-        }
-        switch(sprintType)
-        {
-            case SprintType.clickToSprint:
-                if(playerInputController.inputActions.Player.Sprint.triggered)
-                isSprinting = !isSprinting;    
-                break;
-            case SprintType.holdToSprint:
-                playerInputController.inputActions.Player.Sprint.performed += sprint => isSprinting = true;
-                playerInputController.inputActions.Player.Sprint.canceled += sprint => isSprinting = false;
-               
-                break;
-
-        }
-       
-        #endregion
-        
-        //set y rotation = camera y rotation
-        transform.rotation = Quaternion.Euler(new Vector3(0, mainCamera.eulerAngles.y, 0));
-       
-        pInput = playerInputController.inputActions.Player.Move.ReadValue<Vector2>();
-        
-        charControl.Move(transform.right * pInput.x * movementSpeed * Time.deltaTime + transform.forward * pInput.y * movementSpeed * Time.deltaTime + gravity * transform.up * Time.deltaTime);
     }
+
     private void FixedUpdate()
     {
        
-        if (charControl.isGrounded)
+        if (characterController.isGrounded)
         {
             isInAir = false;
         }
