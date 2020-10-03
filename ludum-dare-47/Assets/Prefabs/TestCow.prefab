@@ -102,7 +102,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6904945765695074376}
-  - component: {fileID: 6904945765695074377}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -126,24 +125,6 @@ Transform:
   m_Father: {fileID: 6904945766007825651}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &6904945765695074377
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6904945765695074379}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.68
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.28, z: 0}
 --- !u!1 &6904945766007825650
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +136,7 @@ GameObject:
   - component: {fileID: 6904945766007825651}
   - component: {fileID: 2960800637666888363}
   - component: {fileID: 1264043748433541120}
+  - component: {fileID: 7683235708812947410}
   m_Layer: 0
   m_Name: TestCow
   m_TagString: Untagged
@@ -205,6 +187,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 5271809357042796554}
   body: {fileID: 6904945765695074376}
+--- !u!143 &7683235708812947410
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904945766007825650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.34, z: 0}
 --- !u!1 &6904945766226122516
 GameObject:
   m_ObjectHideFlags: 0
