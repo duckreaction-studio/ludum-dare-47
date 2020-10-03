@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4235252338830769416}
   - component: {fileID: 4235252338830769417}
   - component: {fileID: 4235252338830769418}
+  - component: {fileID: 8373171027957607192}
   m_Layer: 0
   m_Name: FirstPersonCamera
   m_TagString: MainCamera
@@ -102,6 +103,20 @@ MonoBehaviour:
   MaxLookUpAngle: 70
   MinLookUpAngle: -70
   playerInputController: {fileID: 4235252339964280458}
+--- !u!114 &8373171027957607192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4235252338830769420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c697c791606fd314c98aac01f567b347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInputController: {fileID: 4235252339964280458}
+  maxDistance: 10
 --- !u!1 &4235252339964280461
 GameObject:
   m_ObjectHideFlags: 0
