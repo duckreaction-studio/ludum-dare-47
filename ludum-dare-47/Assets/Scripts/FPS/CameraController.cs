@@ -24,10 +24,11 @@ public class CameraController : MonoBehaviour
     private float MaxLookUpAngle;
     [SerializeField]
     private float MinLookUpAngle;
+    [SerializeField]
+    private PlayerInputController playerInputController;
 
     Vector2 mouseInput;
     Vector2 rotation;
-    public PlayerInputController playerInputController;
     
 
     private void Update()

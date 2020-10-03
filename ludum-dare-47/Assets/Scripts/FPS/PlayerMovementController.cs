@@ -36,8 +36,6 @@ public class PlayerMovementController : MonoBehaviour
 
         Vector2 pInput = playerInputController.inputActions.Player.Move.ReadValue<Vector2>();
 
-        /*charControl.Move(transform.right * pInput.x * walkSpeed * Time.deltaTime + transform.forward * pInput.y * walkSpeed * Time.deltaTime + gravity * transform.up * Time.deltaTime);*/
-
         Vector3 dir = (transform.right * pInput.x + transform.forward * pInput.y) * walkSpeed;
         dir += transform.up * gravity;
         characterController.Move( dir * Time.deltaTime);
@@ -68,11 +66,6 @@ public class PlayerMovementController : MonoBehaviour
             gravity += gravityScale*Physics.gravity.y*Time.deltaTime;
         }
       
-    }
-    public enum SprintType
-    {
-        clickToSprint,
-        holdToSprint
     }
   
 }
