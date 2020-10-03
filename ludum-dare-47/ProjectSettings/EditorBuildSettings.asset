@@ -14,4 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tests/Scenes/test-zenject-ui.unity
     guid: bd839cde8063d524b8997f91cee99226
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 6edfb3d8558f44544b9ca665a751e63c,
+      type: 2}

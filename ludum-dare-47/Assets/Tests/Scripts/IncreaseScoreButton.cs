@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class IncreaseScoreSignal
@@ -23,8 +25,16 @@ public class IncreaseScoreButton : MonoBehaviour
         Debug.Log("I'm injected");
         _signalBus = signalBus;
     }
+
+    public void OnValidatePerformed(InputAction.CallbackContext obj)
+    {
+        if(obj.performed)
+            OnClick();
+    }
+
     public void OnClick()
     {
         _signalBus.Fire(new IncreaseScoreSignal(10));
     }
+
 }
