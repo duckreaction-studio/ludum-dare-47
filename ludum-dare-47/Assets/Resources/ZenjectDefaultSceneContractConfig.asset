@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultContracts:
   - ContractName: main
-    Scene: {fileID: 102900000, guid: 807217459e8cd6b449218553b1f68cac, type: 3}
+    Scene: {fileID: 102900000, guid: 6e9385f105eae55479c6a763b24d1f00, type: 3}

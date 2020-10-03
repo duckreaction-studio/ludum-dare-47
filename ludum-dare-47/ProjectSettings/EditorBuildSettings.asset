@@ -5,15 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Tests/Scenes/test-zenject.unity
-    guid: 807217459e8cd6b449218553b1f68cac
+    path: Assets/Scenes/Home.unity
+    guid: d5ba99ed01c4f2e4b88c02e178411742
   - enabled: 1
-    path: Assets/Tests/Scenes/test-zenject-ui.unity
-    guid: bd839cde8063d524b8997f91cee99226
+    path: Assets/Scenes/Main.unity
+    guid: 9267316ce5a390d4b9e150f5787d0cdb
+  - enabled: 1
+    path: Assets/Scenes/OverlayUI.unity
+    guid: 00b72e69f211f5545b9dc7269e81e753
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 6edfb3d8558f44544b9ca665a751e63c,
       type: 2}
