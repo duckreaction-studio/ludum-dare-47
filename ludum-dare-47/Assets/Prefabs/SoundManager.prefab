@@ -87,11 +87,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12e5f38ca55f1741b6367c3c636a8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volume: {x: 1, y: 1}
-  pitch: {x: 1, y: 1}
+  volume: {x: 0.18658112, y: 0.55}
+  pitch: {x: 0.8, y: 1.2259729}
   lists:
   - _enabled: 1
-    volumeFactor: 1
+    volumeFactor: 0.4
     clips:
     - {fileID: 8300000, guid: a43b5c64135c9924c960ac571e10c36b, type: 3}
     - {fileID: 8300000, guid: f7f363fd2c7ddf7408ee5eec693e4a9d, type: 3}
