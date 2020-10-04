@@ -868,6 +868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 5271809357042796554}
+  audioSource: {fileID: 8166766675858489097}
   body: {fileID: 6904945765695074376}
   waitAfterDie: 2
 --- !u!114 &3034320967622439865
