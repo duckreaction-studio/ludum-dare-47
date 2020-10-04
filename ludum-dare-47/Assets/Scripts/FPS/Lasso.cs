@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostProcess;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,15 +14,19 @@ public class Lasso : MonoBehaviour
     private LassoAnimator animator;
     [SerializeField]
     private float maxDistance = 5f;
+    [SerializeField]
+    private float shakeDuration = 1f;
 
     private Camera fpsCamera;
     private int layerMask;
     private Ray ray;
     private GameData _gameData;
+    private CameraShake cameraShake;
 
     void Start()
     {
         fpsCamera = GetComponent<Camera>();
+        cameraShake = GetComponent<CameraShake>();
         layerMask = LayerMask.GetMask("Cow", "CowTarget","Obstacles");
         Debug.Log("Mask = " + layerMask);
 
@@ -48,6 +53,7 @@ public class Lasso : MonoBehaviour
         if (cow)
         {
             cow.Die();
+            cameraShake.StartShake(shakeDuration);
         }
         animator.AttackFailed();
     }
