@@ -22,7 +22,7 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
 
     private GameData _gameData;
     private CowSpawner _spawner;
-    private ISoundManager _soundManger;
+    private ISoundManager _soundManager;
     private IMemoryPool _pool;
     private float waitBeforeNextSound;
 
@@ -36,7 +36,7 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
     {
         _gameData = gameData;
         _spawner = spawner;
-        _soundManger = soundManager;
+        _soundManager = soundManager;
 
         UpdateNextSoundRandomTime();
     }
@@ -45,7 +45,7 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
     {
         if(_gameData.running && Time.realtimeSinceStartup > waitBeforeNextSound)
         {
-            _soundManger.PlaySound("meuh", audioSource);
+            _soundManager.PlaySound("Meuh", audioSource);
             UpdateNextSoundRandomTime();
         }
     }
@@ -63,6 +63,7 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
         explosion.gameObject.SetActive(true);
         explosion.loop = false;
         explosion.Play();
+        _soundManager.PlaySound("CowDie", audioSource);
 
         StartCoroutine(AfterDieAnimation());
     }

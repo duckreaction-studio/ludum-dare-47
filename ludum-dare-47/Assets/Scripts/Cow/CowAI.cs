@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sound;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,9 +40,11 @@ public class CowAI : MonoBehaviour
     public CowState state { get; private set; } 
     private NavMeshAgent _navAgent;
     private Animator _animator;
+    private AudioSource _audioSource;
     private IPlayer _player;
     private ICowArea _area;
     private GameData _gameData;
+    private ISoundManager _soundManager;
     private bool inited;
     private float stateStartTime;
     private float lastPlayerDistanceCheckTime;
@@ -54,17 +57,19 @@ public class CowAI : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(IPlayer player, ICowArea area, GameData gameData)
+    public void Construct(IPlayer player, ICowArea area, GameData gameData, ISoundManager soundManager)
     {
         _player = player;
         _area = area;
         _gameData = gameData;
+        _soundManager = soundManager;
     }
 
     public void Start()
     {
         _navAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>(true);
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -209,7 +214,10 @@ public class CowAI : MonoBehaviour
 
         Debug.Log("Alert");
         if (alert != null)
+        {
             alert.Play();
+            _soundManager.PlaySound("Alert", _audioSource);
+        }
         AnimatorTrigger("run");
     }
 

@@ -1,4 +1,5 @@
 ﻿using PostProcess;
+using Sound;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ public class Lasso : MonoBehaviour
     [SerializeField]
     private LassoAnimator animator;
     [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
     private float maxDistance = 5f;
     [SerializeField]
     private float shakeDuration = 1f;
@@ -21,22 +24,25 @@ public class Lasso : MonoBehaviour
     private int layerMask;
     private Ray ray;
     private GameData _gameData;
+    private ISoundManager _soundManager;
     private CameraShake cameraShake;
+
+    [Inject]
+    public void Construct(GameData gameData, ISoundManager soundManager)
+    {
+        _gameData = gameData;
+        _soundManager = soundManager;
+    }
 
     void Start()
     {
         fpsCamera = GetComponent<Camera>();
         cameraShake = GetComponent<CameraShake>();
-        layerMask = LayerMask.GetMask("Cow", "CowTarget","Obstacles");
+        layerMask = LayerMask.GetMask("Cow", "CowTarget", "Obstacles");
         Debug.Log("Mask = " + layerMask);
 
         playerInputController.inputActions.Player.Fire.performed += OnFire;
-    }
-
-    [Inject]
-    public void Construct(GameData gameData)
-    {
-        _gameData = gameData;
+        _soundManager.PlaySound("LassoLoop", audioSource);
     }
 
     private void OnFire(InputAction.CallbackContext obj)
@@ -44,6 +50,7 @@ public class Lasso : MonoBehaviour
         if (obj.performed && _gameData.running)
         {
             animator.Attack();
+            _soundManager.PlaySound("LassoAttack", audioSource);
         }
     }
 
@@ -56,6 +63,7 @@ public class Lasso : MonoBehaviour
             cameraShake.StartShake(shakeDuration);
         }
         animator.AttackFailed();
+        _soundManager.PlaySound("LassoLoop", audioSource);
     }
 
     private Cow ProcessedFireRaycast()
