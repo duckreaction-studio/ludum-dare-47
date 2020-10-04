@@ -15,6 +15,10 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
     private Transform body;
     [SerializeField]
     private float waitAfterDie = 2f;
+    [SerializeField]
+    private float minBeforeNextSound = 10f;
+    [SerializeField]
+    private float maxBeforeNextSound = 20f;
 
     private GameData _gameData;
     private CowSpawner _spawner;
@@ -34,7 +38,7 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
         _spawner = spawner;
         _soundManger = soundManager;
 
-        waitBeforeNextSound = UnityEngine.Random.Range(2f, 10f) + Time.realtimeSinceStartup;
+        UpdateNextSoundRandomTime();
     }
 
     public void Update()
@@ -42,8 +46,13 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
         if(_gameData.running && Time.realtimeSinceStartup > waitBeforeNextSound)
         {
             _soundManger.PlaySound("meuh", audioSource);
-            waitBeforeNextSound = UnityEngine.Random.Range(2f, 10f) + Time.realtimeSinceStartup;
+            UpdateNextSoundRandomTime();
         }
+    }
+
+    private void UpdateNextSoundRandomTime()
+    {
+        waitBeforeNextSound = UnityEngine.Random.Range(minBeforeNextSound, maxBeforeNextSound) + Time.realtimeSinceStartup;
     }
 
     public void Die()
