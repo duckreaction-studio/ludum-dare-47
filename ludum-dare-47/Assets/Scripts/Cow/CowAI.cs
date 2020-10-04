@@ -34,6 +34,7 @@ public class CowAI : MonoBehaviour
 
     public CowState state { get; private set; } 
     private NavMeshAgent _navAgent;
+    private Animator _animator;
     private IPlayer _player;
     private ICowArea _area;
     private bool inited;
@@ -57,6 +58,7 @@ public class CowAI : MonoBehaviour
     public void Start()
     {
         _navAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponentInChildren<Animator>(true);
     }
 
     public void Update()
@@ -149,6 +151,7 @@ public class CowAI : MonoBehaviour
                 StartGotoRandomPosition();
                 break;
             default:
+                StartIdle();
                 break;
         }
     }
@@ -175,11 +178,18 @@ public class CowAI : MonoBehaviour
         return distance > playerFleeDistance;
     }
 
+    public void StartIdle()
+    {
+        AnimatorTrigger("idle");
+    }
+
     public void StartFollowPlayer()
     {
         _navAgent.enabled = true;
         _navAgent.speed = runSpeed;
         _navAgent.SetDestination(_player.GetPosition());
+
+        AnimatorTrigger("run");
     }
 
     public void StartGotoRandomPosition()
@@ -195,6 +205,16 @@ public class CowAI : MonoBehaviour
         _navAgent.enabled = true;
         _navAgent.speed = walkSpeed;
         _navAgent.SetDestination(pos);
+
+        AnimatorTrigger("walk");
+    }
+
+    public void AnimatorTrigger(string trigger)
+    {
+        if(_animator != null)
+        {
+            _animator.SetTrigger(trigger);
+        }
     }
 
     public void OnDrawGizmosSelected()
