@@ -92,7 +92,11 @@ public class CowAI : MonoBehaviour
             else
             {
                 _navAgent.enabled = true;
-                if (state != CowState.RUN_TO_PLAYER && CheckCowDetectPlayer())
+                if(state == CowState.RUN_TO_PLAYER)
+                {
+                    _navAgent.SetDestination(_player.GetPosition());
+                }
+                else if(CheckCowDetectPlayer())
                 {
                     state = CowState.RUN_TO_PLAYER;
                     InitCurrentState();

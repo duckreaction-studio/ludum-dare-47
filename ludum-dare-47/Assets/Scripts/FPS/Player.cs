@@ -24,6 +24,20 @@ public class Player : MonoBehaviour, IPlayer
         _playerInputController.inputActions.Player.Pause.performed += OnPausePress;
     }
 
+    public void Update()
+    {
+        if(_gameData.running && Cursor.visible)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else if(!_gameData.running && !Cursor.visible)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
     private void OnPausePress(InputAction.CallbackContext obj)
     {
         if(obj.performed && !_gameData.end)
