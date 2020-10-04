@@ -15,6 +15,7 @@ public enum CowState
 
 public class CowAI : MonoBehaviour
 {
+    [Header("Sensors")]
     [SerializeField]
     private float playerMinDistance = 10f;
     [SerializeField]
@@ -23,6 +24,13 @@ public class CowAI : MonoBehaviour
     private float destinationMinDistance = 1.5f;
     [SerializeField]
     private float cowReactivity = 1f;
+
+    [Header("Nav agent")]
+    [SerializeField]
+    private float walkSpeed = 3f;
+    [SerializeField]
+    private float runSpeed = 5f;
+
 
     public CowState state { get; private set; } 
     private NavMeshAgent _navAgent;
@@ -170,6 +178,7 @@ public class CowAI : MonoBehaviour
     public void StartFollowPlayer()
     {
         _navAgent.enabled = true;
+        _navAgent.speed = runSpeed;
         _navAgent.SetDestination(_player.GetPosition());
     }
 
@@ -183,6 +192,8 @@ public class CowAI : MonoBehaviour
         else
             Debug.LogError("Could not find position on NavMesh!");
 
+        _navAgent.enabled = true;
+        _navAgent.speed = walkSpeed;
         _navAgent.SetDestination(pos);
     }
 
