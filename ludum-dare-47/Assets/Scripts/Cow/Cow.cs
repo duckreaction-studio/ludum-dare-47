@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Cow : MonoBehaviour, IPoolable<string, Vector3, CowSpawner, IMemoryPool>, IDisposable
+public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisposable
 {
     [SerializeField]
     private ParticleSystem explosion;
@@ -13,6 +13,7 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, CowSpawner, IMemory
     [SerializeField]
     private float waitAfterDie = 2f;
 
+    GameData _gameData;
     CowSpawner _spawner;
     IMemoryPool _pool;
 
@@ -21,8 +22,17 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, CowSpawner, IMemory
         explosion.gameObject.SetActive(false);
     }
 
+    [Inject]
+    public void Construct(GameData gameData, CowSpawner spawner)
+    {
+        _gameData = gameData;
+        _spawner = spawner;
+    }
+
     public void Die()
     {
+        _gameData.PlayerCatchACow();
+
         body.gameObject.SetActive(false);
         explosion.gameObject.SetActive(true);
         explosion.loop = false;
@@ -37,10 +47,9 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, CowSpawner, IMemory
         _spawner.RemoveCow(this);
     }
 
-    public void OnSpawned(string name, Vector3 position, CowSpawner spawner, IMemoryPool pool)
+    public void OnSpawned(string name, Vector3 position, IMemoryPool pool)
     {
         _pool = pool;
-        _spawner = spawner;
         gameObject.name = name;
         transform.position = position;
 
@@ -56,7 +65,6 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, CowSpawner, IMemory
     public void OnDespawned()
     {
         _pool = null;
-        _spawner = null;
     }
 
     public void Dispose()
@@ -64,7 +72,7 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, CowSpawner, IMemory
         _pool.Despawn(this);
     }
 
-    public class Factory : PlaceholderFactory<string, Vector3, CowSpawner, Cow>
+    public class Factory : PlaceholderFactory<string, Vector3, Cow>
     {
 
     }

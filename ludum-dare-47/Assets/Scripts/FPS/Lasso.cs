@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class Lasso : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Lasso : MonoBehaviour
     private Camera fpsCamera;
     private int layerMask;
     private Ray ray;
+    private GameData _gameData;
 
     void Start()
     {
@@ -24,9 +26,15 @@ public class Lasso : MonoBehaviour
         playerInputController.inputActions.Player.Fire.performed += OnFire;
     }
 
+    [Inject]
+    public void Construct(GameData gameData)
+    {
+        _gameData = gameData;
+    }
+
     private void OnFire(InputAction.CallbackContext obj)
     {
-        if (obj.performed)
+        if (obj.performed && _gameData.running)
         {
             ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
             Debug.DrawRay(ray.origin,ray.direction * maxDistance,Color.magenta,10f);

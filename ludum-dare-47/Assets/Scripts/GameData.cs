@@ -40,17 +40,15 @@ public class GameData : ITickable
     public bool pause { get; set; }
     public bool end { get; private set; }
 
+    public bool running { get { return !pause && !end; } }
+
     private float _timeScore;
     private int _cowScore;
     private SignalBus _signalBus;
-    private CompositeDisposable _disposables = new CompositeDisposable();
 
     public GameData(SignalBus signalBus)
     {
         _signalBus = signalBus;
-        _signalBus.GetStream<GameRestart>()
-            .Subscribe(x => Restart())
-            .AddTo(_disposables);
     }
 
     public void Restart()
@@ -60,6 +58,7 @@ public class GameData : ITickable
         _cowScore = 0;
         end = false;
         pause = false;
+        _signalBus.Fire<GameRestart>();
     }
 
     public void Tick()

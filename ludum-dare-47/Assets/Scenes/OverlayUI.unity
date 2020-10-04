@@ -1506,5 +1506,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeBar: {fileID: 621848456}
   score: {fileID: 1435750539}
+  finalScore: {fileID: 776693074}
   pausePanel: {fileID: 659397282}
   gamePanel: {fileID: 1042139267}
