@@ -10,6 +10,8 @@ public class OverlayUI : MonoBehaviour
     private Image lifeBar;
     [SerializeField]
     private Text score;
+    [SerializeField]
+    private GameObject pausePanel;
 
     private GameData _gameData;
 
@@ -19,11 +21,19 @@ public class OverlayUI : MonoBehaviour
         _gameData = gameData;
         lifeBar.fillAmount = 1;
         score.text = "";
+        pausePanel.SetActive(false);
     }
 
     public void Update()
     {
         lifeBar.fillAmount = _gameData.relativeLife;
         score.text = _gameData.score.ToString();
+        if (pausePanel.activeSelf != _gameData.pause)
+            pausePanel.SetActive(_gameData.pause);
+    }
+
+    public void ResumeGame()
+    {
+        _gameData.pause = false;
     }
 }
