@@ -13,10 +13,12 @@ public class Lasso : MonoBehaviour
 
     private Camera fpsCamera;
     private LayerMask layerMask;
+    private Ray ray;
+
     void Start()
     {
         fpsCamera = GetComponent<Camera>();
-        layerMask = LayerMask.GetMask("CowTarget");
+        layerMask = LayerMask.GetMask("CowTarget","Obstacles");
 
         playerInputController.inputActions.Player.Fire.performed += OnFire;
     }
@@ -25,22 +27,23 @@ public class Lasso : MonoBehaviour
     {
         if (obj.performed)
         {
-            Ray ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
+            ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
             RaycastHit raycastHit;
-            if (Physics.Raycast(ray, out raycastHit, maxDistance, layerMask))
+            Debug.DrawRay(ray.origin,ray.direction * maxDistance,Color.magenta,10f);
+            if (Physics.Raycast(ray, out raycastHit, maxDistance, layerMask,QueryTriggerInteraction.Collide))
             {
-                Debug.Log("Get a cow");
+                Debug.Log("Get something");
                 Cow cow = raycastHit.transform.GetComponentInParent<Cow>();
                 if(cow)
                 {
                     cow.Die();
                 }
+                else
+                {
+                    Debug.Log("Is not a cow");
+                }
             }
         }
     }
 
-    void Update()
-    {
-        
-    }
 }

@@ -66,4 +66,13 @@ public class CowSpawner : MonoBehaviour
             cow.Dispose();
         }
     }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        foreach(Transform child in transform)
+        {
+            Gizmos.DrawLine(child.position, child.position + Vector3.up * 3);
+        }
+    }
 }
