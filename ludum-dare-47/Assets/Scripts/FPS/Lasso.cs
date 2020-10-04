@@ -12,13 +12,14 @@ public class Lasso : MonoBehaviour
     private float maxDistance = 5f;
 
     private Camera fpsCamera;
-    private LayerMask layerMask;
+    private int layerMask;
     private Ray ray;
 
     void Start()
     {
         fpsCamera = GetComponent<Camera>();
-        layerMask = LayerMask.GetMask("CowTarget","Obstacles");
+        layerMask = LayerMask.GetMask("Cow", "CowTarget","Obstacles");
+        Debug.Log("Mask = " + layerMask);
 
         playerInputController.inputActions.Player.Fire.performed += OnFire;
     }
@@ -28,19 +29,30 @@ public class Lasso : MonoBehaviour
         if (obj.performed)
         {
             ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
-            RaycastHit raycastHit;
             Debug.DrawRay(ray.origin,ray.direction * maxDistance,Color.magenta,10f);
-            if (Physics.Raycast(ray, out raycastHit, maxDistance, layerMask,QueryTriggerInteraction.Collide))
+            var result = Physics.RaycastAll(ray, maxDistance, layerMask);
+            if (result.Length > 0)
             {
-                Debug.Log("Get something");
-                Cow cow = raycastHit.transform.GetComponentInParent<Cow>();
-                if(cow)
+                Debug.Log("Get something ("+result.Length+")");
+                foreach (var hit in result)
                 {
-                    cow.Die();
-                }
-                else
-                {
-                    Debug.Log("Is not a cow");
+                    if (hit.transform.tag == "Cow")
+                    {
+                        Debug.Log("Get a cow hit collider");
+                        Cow cow = hit.transform.GetComponent<Cow>();
+                        if (cow)
+                        {
+                            cow.Die();
+                        }
+                        else
+                        {
+                            Debug.LogError("Cannot find component cow in parent");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Is not a cow "+hit.transform.name,hit.transform);
+                    }
                 }
             }
         }

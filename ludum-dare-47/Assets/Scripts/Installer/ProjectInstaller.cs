@@ -8,7 +8,11 @@ public class ProjectInstaller : MonoInstaller
     public override void InstallBindings()
     {
         SignalBusInstaller.Install(Container);
+        Container.DeclareSignal<GameOver>();
+        Container.DeclareSignal<GameRestart>();
         Container.DeclareSignal<StartSceneTransitionEffectSignal>();
+
+        Container.BindInterfacesAndSelfTo<GameData>().AsSingle();
 
         GameObject effect = Container.InstantiatePrefab(effectPrefab);
         if(Application.isPlaying)
