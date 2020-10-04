@@ -121,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInputController: {fileID: 4235252339964280458}
   animator: {fileID: 2737554101096819883}
+  audioSource: {fileID: 0}
   maxDistance: 10
   shakeDuration: 0.5
 --- !u!114 &5556796541967783745
@@ -509,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 10
-  jumpForce: 10
+  jumpForce: 15
   gravityScale: 3
   mainCamera: {fileID: 4235252338830769419}
   playerInputController: {fileID: 4235252339964280458}
