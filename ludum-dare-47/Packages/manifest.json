@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.dubitlimited.duck.tween": "https://github.com/dubit/duck-tween.git",
+    "com.guciodevs.simple-min-max-slider": "https://github.com/GucioDevs/SimpleMinMaxSlider.git#upm",
     "com.unity.cinemachine": "2.6.3",
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.vscode": "1.2.1",

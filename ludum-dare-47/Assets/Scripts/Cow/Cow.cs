@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sound;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,13 +10,17 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
     [SerializeField]
     private ParticleSystem explosion;
     [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
     private Transform body;
     [SerializeField]
     private float waitAfterDie = 2f;
 
-    GameData _gameData;
-    CowSpawner _spawner;
-    IMemoryPool _pool;
+    private GameData _gameData;
+    private CowSpawner _spawner;
+    private ISoundManager _soundManger;
+    private IMemoryPool _pool;
+    private float waitBeforeNextSound;
 
     public void Awake()
     {
@@ -23,10 +28,22 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
     }
 
     [Inject]
-    public void Construct(GameData gameData, CowSpawner spawner)
+    public void Construct(GameData gameData, CowSpawner spawner, ISoundManager soundManager)
     {
         _gameData = gameData;
         _spawner = spawner;
+        _soundManger = soundManager;
+
+        waitBeforeNextSound = UnityEngine.Random.Range(2f, 10f) + Time.realtimeSinceStartup;
+    }
+
+    public void Update()
+    {
+        if(_gameData.running && Time.realtimeSinceStartup > waitBeforeNextSound)
+        {
+            _soundManger.PlaySound("meuh", audioSource);
+            waitBeforeNextSound = UnityEngine.Random.Range(2f, 10f) + Time.realtimeSinceStartup;
+        }
     }
 
     public void Die()
