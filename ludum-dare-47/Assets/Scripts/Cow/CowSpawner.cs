@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using UniRx;
 
 public class CowSpawner : MonoBehaviour
 {
@@ -14,12 +15,21 @@ public class CowSpawner : MonoBehaviour
     float lastSpawn;
     int cowId = 0;
     Cow.Factory _cowFactory;
+    SignalBus _signalBus;
+    CompositeDisposable _disposables = new CompositeDisposable();
     List<Cow> _activeCowList = new List<Cow>();
 
     [Inject]
-    public void Construct(Cow.Factory cowFactory)
+    public void Construct(Cow.Factory cowFactory, SignalBus signalBus)
     {
         _cowFactory = cowFactory;
+        _signalBus = signalBus;
+        _signalBus.GetStream<GameOver>()
+            .Subscribe(x => DestroyAllCows())
+            .AddTo(_disposables);
+        _signalBus.GetStream<GameRestart>()
+            .Subscribe(x => Restart())
+            .AddTo(_disposables);
 
         StartCoroutine(CreatFirstCows());
     }
@@ -43,11 +53,23 @@ public class CowSpawner : MonoBehaviour
         }
     }
 
+    public void DestroyAllCows()
+    {
+        while(_activeCowList.Count > 0)
+        {
+            RemoveCow(_activeCowList[0]);
+        }
+    }
+
+    public void Restart()
+    {
+        StartCoroutine(CreatFirstCows());
+    }
+
     public void AddCow()
     {
         ++cowId;
-        var cow = _cowFactory.Create("Cow"+cowId,
-            GetRandomStartPoint(), this);
+        var cow = _cowFactory.Create("Cow"+cowId,GetRandomStartPoint());
 
         _activeCowList.Add(cow);
     }

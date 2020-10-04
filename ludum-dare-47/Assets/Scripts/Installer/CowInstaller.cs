@@ -11,8 +11,9 @@ public class CowInstaller : MonoInstaller
     {
         Container.Bind<IPlayer>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<ICowArea>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<CowSpawner>().FromComponentInHierarchy().AsSingle();
 
-        Container.BindFactory<string, Vector3, CowSpawner, Cow, Cow.Factory>().FromMonoPoolableMemoryPool(
+        Container.BindFactory<string, Vector3, Cow, Cow.Factory>().FromMonoPoolableMemoryPool(
             x => x.WithInitialSize(10).FromComponentInNewPrefab(CowPrefab).UnderTransformGroup("CowPool")
         );
     }

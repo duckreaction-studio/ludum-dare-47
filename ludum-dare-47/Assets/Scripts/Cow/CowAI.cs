@@ -41,6 +41,7 @@ public class CowAI : MonoBehaviour
     private Animator _animator;
     private IPlayer _player;
     private ICowArea _area;
+    private GameData _gameData;
     private bool inited;
     private float stateStartTime;
     private float lastPlayerDistanceCheckTime;
@@ -53,10 +54,11 @@ public class CowAI : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(IPlayer player, ICowArea area)
+    public void Construct(IPlayer player, ICowArea area, GameData gameData)
     {
         _player = player;
         _area = area;
+        _gameData = gameData;
     }
 
     public void Start()
@@ -83,16 +85,24 @@ public class CowAI : MonoBehaviour
         }
         else
         {
-            if (state != CowState.RUN_TO_PLAYER && CheckCowDetectPlayer())
+            if (_gameData.pause)
             {
-                state = CowState.RUN_TO_PLAYER;
-                InitCurrentState();
-                return;
+                _navAgent.enabled = false;
             }
-            if (CurrentStateIsFinished())
+            else
             {
-                state = GetNextState();
-                InitCurrentState();
+                _navAgent.enabled = true;
+                if (state != CowState.RUN_TO_PLAYER && CheckCowDetectPlayer())
+                {
+                    state = CowState.RUN_TO_PLAYER;
+                    InitCurrentState();
+                    return;
+                }
+                if (CurrentStateIsFinished())
+                {
+                    state = GetNextState();
+                    InitCurrentState();
+                }
             }
         }
     }
