@@ -887,6 +887,7 @@ MonoBehaviour:
   cowReactivity: 1
   walkSpeed: 3
   runSpeed: 6
+  alert: {fileID: 270321188716161727}
 --- !u!54 &1898097448006937611
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -922,7 +923,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &7116217878683070004
@@ -1590,6 +1591,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3586265894119368483}
     m_Modifications:
+    - target: {fileID: 7662189481551906213, guid: 0a26cc671f6389746ba86b79d576855e,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7662189481551906213, guid: 0a26cc671f6389746ba86b79d576855e,
+        type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035317846213944866, guid: 0a26cc671f6389746ba86b79d576855e,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035317846213944866, guid: 0a26cc671f6389746ba86b79d576855e,
+        type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8035317846213944867, guid: 0a26cc671f6389746ba86b79d576855e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1652,6 +1673,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a26cc671f6389746ba86b79d576855e, type: 3}
+--- !u!198 &270321188716161727 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8035317846213944866, guid: 0a26cc671f6389746ba86b79d576855e,
+    type: 3}
+  m_PrefabInstance: {fileID: 7801202890487385245}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &270321188716161726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8035317846213944867, guid: 0a26cc671f6389746ba86b79d576855e,
