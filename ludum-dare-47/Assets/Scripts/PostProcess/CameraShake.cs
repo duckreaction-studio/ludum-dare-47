@@ -13,6 +13,8 @@ namespace PostProcess
 		[SerializeField]
 		private float decreaseFactor = 1.0f;
 
+		public bool isShaking { get; private set; }
+
 		private Vector3 originalPos;
 		private float shakeDuration = 0;
 		private float currentShakeAmount;
@@ -25,15 +27,12 @@ namespace PostProcess
 			}
 		}
 
-		void OnEnable()
-		{
-			originalPos = camTransform.localPosition;
-		}
-
 		public void StartShake(float duration)
 		{
 			shakeDuration = duration;
 			currentShakeAmount = shakeAmount;
+			originalPos = camTransform.localPosition;
+			isShaking = true;
 		}
 
 		void Update()
@@ -45,9 +44,10 @@ namespace PostProcess
 				shakeDuration -= Time.deltaTime;
 				currentShakeAmount = decreaseFactor * currentShakeAmount;
 			}
-			else
+			else if(isShaking)
 			{
 				shakeDuration = 0f;
+				isShaking = false;
 				camTransform.localPosition = originalPos;
 			}
 		}

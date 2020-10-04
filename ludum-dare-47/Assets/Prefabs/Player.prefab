@@ -121,6 +121,7 @@ MonoBehaviour:
   playerInputController: {fileID: 4235252339964280458}
   animator: {fileID: 2737554101096819883}
   maxDistance: 10
+  shakeDuration: 0.5
 --- !u!114 &5556796541967783745
 MonoBehaviour:
   m_ObjectHideFlags: 0
