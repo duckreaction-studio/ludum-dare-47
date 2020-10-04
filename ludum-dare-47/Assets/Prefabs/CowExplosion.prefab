@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8035317846213944867}
   - component: {fileID: 8035317846213944866}
   - component: {fileID: 8035317846213944869}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CowExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}

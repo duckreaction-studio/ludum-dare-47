@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0229ed3dacec7804e9a04ecfb4ddb874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cowStartCount: 10
+  cowStartCount: 2
   delayBetweenNewCow: 5
 --- !u!1 &1714955213
 GameObject:
