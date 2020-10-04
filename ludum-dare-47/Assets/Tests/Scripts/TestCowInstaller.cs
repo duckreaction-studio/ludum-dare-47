@@ -7,5 +7,6 @@ public class TestCowInstaller : MonoInstaller
     {
         Container.Bind<IPlayer>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<CowAI>().FromComponentsInHierarchy().AsSingle();
+        Container.Bind<ICowArea>().FromComponentInHierarchy().AsSingle();
     }
 }
