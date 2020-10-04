@@ -31,6 +31,10 @@ public class CowAI : MonoBehaviour
     [SerializeField]
     private float runSpeed = 5f;
 
+    [Header("FX")]
+    [SerializeField]
+    private ParticleSystem alert;
+
 
     public CowState state { get; private set; } 
     private NavMeshAgent _navAgent;
@@ -79,7 +83,7 @@ public class CowAI : MonoBehaviour
         }
         else
         {
-            if (CheckCowDetectPlayer())
+            if (state != CowState.RUN_TO_PLAYER && CheckCowDetectPlayer())
             {
                 state = CowState.RUN_TO_PLAYER;
                 InitCurrentState();
@@ -189,6 +193,9 @@ public class CowAI : MonoBehaviour
         _navAgent.speed = runSpeed;
         _navAgent.SetDestination(_player.GetPosition());
 
+        Debug.Log("Alert");
+        if (alert != null)
+            alert.Play();
         AnimatorTrigger("run");
     }
 
