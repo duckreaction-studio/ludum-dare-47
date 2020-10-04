@@ -10,6 +10,8 @@ public class Lasso : MonoBehaviour
     [SerializeField]
     private PlayerInputController playerInputController;
     [SerializeField]
+    private LassoAnimator animator;
+    [SerializeField]
     private float maxDistance = 5f;
 
     private Camera fpsCamera;
@@ -36,34 +38,41 @@ public class Lasso : MonoBehaviour
     {
         if (obj.performed && _gameData.running)
         {
-            ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
-            Debug.DrawRay(ray.origin,ray.direction * maxDistance,Color.magenta,10f);
-            var result = Physics.RaycastAll(ray, maxDistance, layerMask);
-            if (result.Length > 0)
-            {
-                Debug.Log("Get something ("+result.Length+")");
-                foreach (var hit in result)
-                {
-                    if (hit.transform.tag == "Cow")
-                    {
-                        Debug.Log("Get a cow hit collider");
-                        Cow cow = hit.transform.GetComponent<Cow>();
-                        if (cow)
-                        {
-                            cow.Die();
-                        }
-                        else
-                        {
-                            Debug.LogError("Cannot find component cow in parent");
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("Is not a cow "+hit.transform.name,hit.transform);
-                    }
-                }
-            }
+            animator.Attack();
         }
     }
 
+    public void OnLassoAttackFinished()
+    {
+        var cow = ProcessedFireRaycast();
+        if (cow)
+        {
+            cow.Die();
+        }
+        animator.AttackFailed();
+    }
+
+    private Cow ProcessedFireRaycast()
+    {
+        ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.magenta, 10f);
+        var result = Physics.RaycastAll(ray, maxDistance, layerMask);
+        if (result.Length > 0)
+        {
+            Debug.Log("Get something (" + result.Length + ")");
+            foreach (var hit in result)
+            {
+                if (hit.transform.tag == "Cow")
+                {
+                    Debug.Log("Get a cow hit collider");
+                    return hit.transform.GetComponent<Cow>();
+                }
+                else
+                {
+                    Debug.Log("Is not a cow " + hit.transform.name, hit.transform);
+                }
+            }
+        }
+        return null;
+    }
 }
