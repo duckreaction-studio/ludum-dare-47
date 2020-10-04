@@ -19,6 +19,7 @@ public class GameData : ITickable
     public static readonly int MAX_LIFE = 100;
     public static readonly int SCORE_PER_COW = 100;
     public static readonly int SCORE_PER_SECOND = 10;
+    public static readonly int LOOSE_LIFE_RATIO = 4;
 
     public int score 
     {
@@ -66,7 +67,7 @@ public class GameData : ITickable
         if(!pause && !end)
         {
             _timeScore += Time.deltaTime;
-            life -= Time.deltaTime;
+            life -= Time.deltaTime * LOOSE_LIFE_RATIO;
             if(life <= 0)
             {
                 end = true;

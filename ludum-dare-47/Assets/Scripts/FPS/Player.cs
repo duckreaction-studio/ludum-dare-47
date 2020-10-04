@@ -26,7 +26,7 @@ public class Player : MonoBehaviour, IPlayer
 
     private void OnPausePress(InputAction.CallbackContext obj)
     {
-        if(obj.performed)
+        if(obj.performed && !_gameData.end)
         {
             _gameData.pause = !_gameData.pause;
         }

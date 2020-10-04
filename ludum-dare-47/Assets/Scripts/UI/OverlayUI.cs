@@ -12,6 +12,8 @@ public class OverlayUI : MonoBehaviour
     private Text score;
     [SerializeField]
     private GameObject pausePanel;
+    [SerializeField]
+    private GameObject gamePanel;
 
     private GameData _gameData;
 
@@ -30,10 +32,17 @@ public class OverlayUI : MonoBehaviour
         score.text = _gameData.score.ToString();
         if (pausePanel.activeSelf != _gameData.pause)
             pausePanel.SetActive(_gameData.pause);
+        if (gamePanel.activeSelf != _gameData.end)
+            gamePanel.SetActive(_gameData.end);
     }
 
     public void ResumeGame()
     {
         _gameData.pause = false;
+    }
+
+    public void RestartGame()
+    {
+        _gameData.Restart();
     }
 }
