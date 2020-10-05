@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Sound
 {
@@ -11,6 +12,12 @@ namespace Sound
     public class SoundManager : MonoBehaviour, ISoundManager
     {
         private Dictionary<string, RandomSoundPlayer> soundPlayers = new Dictionary<string, RandomSoundPlayer>();
+
+        [Inject]
+        public SoundManager()
+        {
+
+        }
 
         void Start()
         {

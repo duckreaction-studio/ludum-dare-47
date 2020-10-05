@@ -37,6 +37,7 @@ public class GameData : ITickable
         }
     }
 
+    public bool pauseCounter { get; set; } = true;
     public bool pause { get; set; }
     public bool end { get; private set; }
 
@@ -46,6 +47,7 @@ public class GameData : ITickable
     private int _cowScore;
     private SignalBus _signalBus;
 
+    [Inject]
     public GameData(SignalBus signalBus)
     {
         _signalBus = signalBus;
@@ -63,7 +65,7 @@ public class GameData : ITickable
 
     public void Tick()
     {
-        if(!pause && !end)
+        if(!pauseCounter && !pause && !end)
         {
             _timeScore += Time.deltaTime;
             life -= Time.deltaTime * LOOSE_LIFE_RATIO;

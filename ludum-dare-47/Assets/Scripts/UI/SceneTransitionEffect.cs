@@ -11,67 +11,34 @@ using Zenject;
 using UnityEditor;
 #endif
 
-public class StartSceneTransitionEffectSignal
-{
-    public Action callback{get; private set;}
-
-    public StartSceneTransitionEffectSignal()
-    {
-
-    }
-    public StartSceneTransitionEffectSignal(Action callback)
-    {
-        this.callback = callback;
-    }
-}
-
 public class SceneTransitionEffect : MonoBehaviour
 {
     [SerializeField]
     private RawImage image;
     [SerializeField]
     private float fadeDuration = 1f;
-    [SerializeField]
-    private float waitDuration = 0.5f;
-
-    private SignalBus _signalBus;
-    private CompositeDisposable _disposables = new CompositeDisposable();
-    private StartSceneTransitionEffectSignal _lastSignal;
 
     [Inject]
-    public void Construct(SignalBus signalBus)
+    public void Construct()
     {
-        Debug.Log("SceneTransitionEffect is injected");
-        _signalBus = signalBus;
-        _signalBus.GetStream<StartSceneTransitionEffectSignal>()
-            .Subscribe(OnReceiveSignal)
-            .AddTo(_disposables);
     }
 
-    protected void OnReceiveSignal(StartSceneTransitionEffectSignal obj)
-    {
-        _lastSignal = obj;
-        StartFadeEffect();
-    }
-
-    [ContextMenu("Test transition")]
-    public void StartFadeEffect()
+    public void StartFadeInEffect(Action callback)
     {
         var sequence = new SequencedAnimation()
                     .Fade(image, 0, 0, 0.01f) //issue
                     .FadeTo(image, 1, fadeDuration)
-                    .Invoke(InvokeCallback)
-                    .Wait(waitDuration)
-                    .FadeTo(image, 0, fadeDuration);
+                    .Invoke(callback);
 
         sequence.Play();
     }
 
-    private void InvokeCallback()
+    public void StartFadeOutEffect(Action callback)
     {
-        if(_lastSignal != null && _lastSignal.callback != null)
-        {
-            _lastSignal.callback();
-        }
+        var sequence = new SequencedAnimation()
+                    .FadeTo(image, 0, fadeDuration)
+                    .Invoke(callback);
+
+        sequence.Play();
     }
 }

@@ -1,0 +1,6 @@
+<linker>
+  <assembly fullname="UniRx" preserve="all"/>
+  <assembly fullname="Zenject" preserve="all"/>
+  <assembly fullname="Zenject-usage" preserve="all"/>
+  <assembly fullname="app" preserve="all"/>
+</linker>

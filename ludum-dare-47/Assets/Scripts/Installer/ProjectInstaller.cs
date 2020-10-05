@@ -1,6 +1,7 @@
 using Sound;
 using UnityEngine;
 using Zenject;
+using Zenject.Internal;
 
 public class ProjectInstaller : MonoInstaller
 {
@@ -9,19 +10,17 @@ public class ProjectInstaller : MonoInstaller
     [SerializeField]
     private GameObject soundManagerPrefab;
 
+    [Preserve]
     public override void InstallBindings()
     {
         SignalBusInstaller.Install(Container);
-        Container.DeclareSignal<GameOver>();
-        Container.DeclareSignal<GameRestart>();
-        Container.DeclareSignal<StartSceneTransitionEffectSignal>();
+        Container.DeclareSignal<GameOver>().OptionalSubscriber();
+        Container.DeclareSignal<GameRestart>().OptionalSubscriber();
 
-        Container.BindInterfacesAndSelfTo<GameData>().AsSingle();
+        Container.BindInterfacesAndSelfTo<GameData>().AsSingle().NonLazy();
 
         Container.Bind<ISoundManager>().FromComponentInNewPrefab(soundManagerPrefab).AsSingle();
 
-        GameObject effect = Container.InstantiatePrefab(effectPrefab);
-        if(Application.isPlaying)
-            DontDestroyOnLoad(effect);
+        Container.Bind<SceneTransitionEffect>().FromComponentInNewPrefab(effectPrefab).AsSingle().NonLazy();
     }
 }

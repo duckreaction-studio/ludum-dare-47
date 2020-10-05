@@ -101,6 +101,15 @@ public class Cow : MonoBehaviour, IPoolable<string, Vector3, IMemoryPool>, IDisp
 
     public class Factory : PlaceholderFactory<string, Vector3, Cow>
     {
+        [Inject]
+        public Factory():base()
+        {
+
+        }
+    }
+
+    public class Pool : MonoPoolableMemoryPool<string, Vector3, IMemoryPool, Cow>
+    {
 
     }
 

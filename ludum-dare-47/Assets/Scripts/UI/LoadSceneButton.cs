@@ -13,15 +13,20 @@ public class LoadSceneButton : MonoBehaviour
     private ZenjectSceneLoader _loader;
 
     [Inject]
-    private SignalBus _signalBus;
+    private SceneTransitionEffect _sceneTransition;
 
     public void LoadScene()
     {
-        _signalBus.Fire(new StartSceneTransitionEffectSignal(OnScreenIsBlack));
+        _sceneTransition.StartFadeInEffect(OnScreenIsBlack);
     }
 
     private void OnScreenIsBlack()
     {
-        _loader.LoadSceneAsync(sceneName, loadMode: UnityEngine.SceneManagement.LoadSceneMode.Single);
+        _loader.LoadSceneAsync(sceneName, loadMode: UnityEngine.SceneManagement.LoadSceneMode.Single).completed += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(AsyncOperation obj)
+    {
+        _sceneTransition.StartFadeOutEffect(() => { });
     }
 }

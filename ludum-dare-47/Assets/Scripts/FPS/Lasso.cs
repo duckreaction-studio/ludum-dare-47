@@ -47,7 +47,7 @@ public class Lasso : MonoBehaviour
 
     private void OnFire(InputAction.CallbackContext obj)
     {
-        if (obj.performed && _gameData.running)
+        if (obj.performed && _gameData != null && _gameData.running)
         {
             animator.Attack();
             _soundManager.PlaySound("LassoAttack", audioSource);
